@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore; 
+using Online_Medical.ALL_DATA;
 namespace Online_Medical
 {
     public class Program
@@ -6,7 +8,12 @@ namespace Online_Medical
         {
             var builder = WebApplication.CreateBuilder(args);
 
+           
+           var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                 options.UseSqlServer(connectionString));
             // Add services to the container.
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
