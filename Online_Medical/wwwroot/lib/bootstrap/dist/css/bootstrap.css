@@ -7648,8 +7648,8 @@ textarea.form-control-lg {
 
 /* rtl:end:remove */
 .text-primary {
-  --bs-text-opacity: 1;
-  color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+    --bs-text-opacity: 1;
+    color: #4A90E2 !important;
 }
 
 .text-secondary {
@@ -7739,8 +7739,8 @@ textarea.form-control-lg {
 }
 
 .bg-primary {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    --bs-bg-opacity: 1;
+    background-color: #4A90E2 !important;
 }
 
 .bg-secondary {

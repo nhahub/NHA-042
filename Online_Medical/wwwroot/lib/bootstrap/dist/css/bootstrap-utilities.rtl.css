@@ -1285,8 +1285,8 @@
   white-space: nowrap !important;
 }
 .text-primary {
-  --bs-text-opacity: 1;
-  color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+    --bs-text-opacity: 1;
+    color: #4A90E2 !important;
 }
 
 .text-secondary {
