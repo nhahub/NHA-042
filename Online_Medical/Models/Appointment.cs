@@ -24,11 +24,11 @@ namespace Online_Medical.Models
         public Payment? Payment { get; set; }
         // Foreign Keys
         [ForeignKey("Doctor")]
-        public int DoctorId { get; set; }
+        public string DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 
         [ForeignKey("Patient")]
-        public int PatientId { get; set; }
+        public string PatientId { get; set; }
         public Patient Patient { get; set; }
         [ForeignKey("Clinic")]
         public int ClinicId { get; set; }

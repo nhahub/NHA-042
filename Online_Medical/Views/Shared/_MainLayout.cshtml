@@ -26,7 +26,7 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio">Doctors</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -50,59 +50,50 @@
             </div>
         </div>
     </header>
-
-    @*----------------------- Render Body -----------------------*@
-    <section>
-        <div>@RenderBody()</div>
-    </section>
-
-    @* -----------------------          ------------------------------------*@
-    
-    
-    <!-- Services-->
-    <section class="page-section" id="services">
+    @RenderBody()   
+    <!-------------------------- About --------------------------------->
+    <section class="page-section bg-primary mt-5" id="about">
         <div class="container px-4 px-lg-5">
-            <h2 class="text-center mt-0">At Your Service</h2>
-            <hr class="divider" />
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mt-5">
-                        <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-                        <h3 class="h4 mb-2">Sturdy Themes</h3>
-                        <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mt-5">
-                        <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
-                        <h3 class="h4 mb-2">Up to Date</h3>
-                        <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mt-5">
-                        <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
-                        <h3 class="h4 mb-2">Ready to Publish</h3>
-                        <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mt-5">
-                        <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
-                        <h3 class="h4 mb-2">Made with Love</h3>
-                        <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
-                    </div>
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="text-white mt-0">We've got what you need!</h2>
+                    <hr class="divider divider-light" />
+                    <p class="text-white-75 mb-4">Sehatk Live was founded on the belief that everyone deserves effortless access to reliable medical care. We are more than just a booking platform; we are a community-driven space built on trust, transparency, and patient empowerment.</p>
+                    <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Services-->
+    <section class="page-section" id="services">
+        <div class="container px-4 px-lg-5">
+            <h2 class="text-center mt-0">Our Core Services</h2>
+            <hr class="divider" />
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-6 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-calendar-check fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Instant Doctor Booking</h3>
+                        <p class="text-muted mb-0">Find the right specialist, view their real-time availability, and schedule your appointment instantly, 24/7. No waiting on hold!</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-chat-square-text fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Verified Patient Reviews</h3>
+                        <p class="text-muted mb-0">Read honest, verified reviews and ratings from our community to make informed decisions about your healthcare providers.</p>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
     <!-- Portfolio-->
     <div id="portfolio">
         <div class="container-fluid p-0">
             <div class="row g-0">
                 <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/11.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Dermatology & Cosmetology</div>
@@ -111,7 +102,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/2.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/12.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Dentistry</div>
@@ -119,17 +110,17 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/3.jpg" alt="..." />
+                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/3.jpg" title="pediatrics">
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/13.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Pediatrics</div>
                         </div>
-                    </a>
+                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/4.jpg" alt="..." />
+                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/4.jfif" title="Project Name">
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/4.jfif" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Obstetrics and Gynecology</div>
@@ -137,8 +128,8 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/5.jpg" alt="..." />
+                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/5.jfif" title="Project Name">
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/5.jfif" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Internal Medicine & Gastroenterology</div>
@@ -147,7 +138,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/6.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/16.jpg" alt="..." />
                         <div class="portfolio-box-caption p-3">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Orthopedics</div>
@@ -156,7 +147,7 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/7.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/7.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/17.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">ENT (Otolaryngology)</div>
@@ -164,7 +155,7 @@
                     </a>
                 </div><div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/8.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/8.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/18.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Ophthalmology</div>
@@ -173,31 +164,17 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="/assets/img/portfolio/fullsize/9.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/9.jpg" alt="..." />
+                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/19.jpg" alt="..." />
                         <div class="portfolio-box-caption">
                             <div class="project-category text-white-50">Department</div>
                             <div class="project-name">Psychiatry</div>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="/assets/img/portfolio/fullsize/10.jpg" title="Project Name">
-                        <img class="img-fluid" src="/assets/img/portfolio/thumbnails/10.jpg" alt="..." />
-                        <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Department</div>
-                            <div class="project-name">Clinical Nutrition</div>
-                        </div>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
-    <!-- Call to action-->
-    <section class="page-section bg-dark text-white">
-        <div class="container px-4 px-lg-5 text-center">
-            <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-            <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
-        </div>
+    
     </section>
     <!-- Contact-->
     <section class="page-section" id="contact">
@@ -289,5 +266,11 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    
+    
+    <script src="~/lib/jquery/dist/jquery.min.js">     </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">  </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
