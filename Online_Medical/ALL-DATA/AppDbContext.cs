@@ -28,8 +28,7 @@ namespace Online_Medical.ALL_DATA
         {
             base.OnModelCreating(modelBuilder);
 
-            // السطر ده هو اللي بيحل مشكلة الجدول الوسيط
-            // بنقوله: المفتاح بتاع الجدول ده عبارة عن (DoctorId + ClinicId) مع بعض
+           
             modelBuilder.Entity<DoctorClinic>()
                 .HasKey(dc => new { dc.DoctorId, dc.ClinicId });
         }
