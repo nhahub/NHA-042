@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Registration Successful";
+}
+
+<div class="container mt-5 text-center">
+    <div class="card shadow p-5">
+        <div class="card-body">
+
+            <h2 class="text-success display-5 fw-bold">
+                <i class="fas fa-check-circle"></i> Success!
+            </h2>
+
+            <p class="lead mt-3 fw-bold">
+                @ViewBag.Message
+            </p>
+
+            <hr class="my-4" />
+
+            <a asp-action="Login" asp-controller="Account" class="btn btn-primary btn-lg px-5">
+                Log In
+            </a>
+
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_Medical.ALL_DATA;
 
+
 #nullable disable
 
 namespace Online_Medical.Migrations
