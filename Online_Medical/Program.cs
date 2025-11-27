@@ -18,58 +18,52 @@ namespace Online_Medical
             // 1. Database Configuration
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                 options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString));
+
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
+            // 2. Identity Configuration (ONLY ONCE)
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-               
                 options.SignIn.RequireConfirmedEmail = false;
                 options.User.RequireUniqueEmail = true;
             })
-.AddEntityFrameworkStores<AppDbContext>()
-.AddDefaultTokenProviders(); 
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
 
-            // 2. Add Session Service (Important for Login)
-            builder.Services.AddDistributedMemoryCache(); // Stores session in memory
+            // 3. Add Session (for Login persistence)
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session dies after 30 mins
-                options.Cookie.HttpOnly = true; // Security: Protects cookie
-                options.Cookie.IsEssential = true; // Required for the app to work
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
 
-
-            // Identity
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+            // 4. Repositories
+            builder.Services.AddScoped<IRepository<Doctor, string>, DoctorRepository>();
+            builder.Services.AddScoped<IRepository<Specialization, int>, SpecializationRepository>();
 
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
-
-
-            // Repositorie
-            //builder.Services.AddScoped<IRepository<Appointment,int>,AppointmentReporsitory>();
-            builder.Services.AddScoped<IRepository<Doctor,string>, DoctorRepository>();
-            builder.Services.AddScoped<IRepository<Specialization,int>, SpecializationRepository>();
-
-
-
-
-            // Services
+            // 5. Services
             builder.Services.AddScoped<DoctorService>();
 
-            // Auto Mapper Configurations
+
+            // 6. AutoMapper
             builder.Services.AddAutoMapper(typeof(DoctorMappingProfile));
 
 
+            // 7. MVC
+            builder.Services.AddControllersWithViews();
 
 
             var app = builder.Build();
+
+
+            // 8. Database Seeder
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -77,8 +71,7 @@ namespace Online_Medical
                 {
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    await Online_Medical.Repository.DbInitializer.Initialize(userManager, roleManager);
+                    await DbInitializer.Initialize(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {
@@ -88,7 +81,7 @@ namespace Online_Medical
             }
 
 
-            // Configure the HTTP request pipeline.
+            // 9. Middleware
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -100,11 +93,10 @@ namespace Online_Medical
 
             app.UseRouting();
 
-            app.UseAuthentication();   
+            app.UseSession();          // BEFORE Authentication
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
-            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
