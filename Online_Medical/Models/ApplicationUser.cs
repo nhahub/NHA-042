@@ -3,11 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Online_Medical.Models
 {
-    public enum Gender
-    {
-        Male,
-        Female,
-    }
 
     public class ApplicationUser:IdentityUser
     {

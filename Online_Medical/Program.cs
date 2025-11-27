@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online_Medical.ALL_DATA;
 using Online_Medical.Interface;
+using Online_Medical.Mapping;
+using Online_Medical.Models;
 using Online_Medical.Repository;
+using Online_Medical.Services;
 
 namespace Online_Medical
 {
@@ -16,6 +20,8 @@ namespace Online_Medical
             builder.Services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(connectionString));
 
+
+
             // 2. Add Session Service (Important for Login)
             builder.Services.AddDistributedMemoryCache(); // Stores session in memory
             builder.Services.AddSession(options =>
@@ -25,9 +31,34 @@ namespace Online_Medical
                 options.Cookie.IsEssential = true; // Required for the app to work
             });
 
+
+
+            // Identity
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IAppointment,AppointmentReporsitory>();
+
+
+
+            // Repositorie
+            //builder.Services.AddScoped<IRepository<Appointment,int>,AppointmentReporsitory>();
+            builder.Services.AddScoped<IRepository<Doctor,string>, DoctorRepository>();
+            builder.Services.AddScoped<IRepository<Specialization,int>, SpecializationRepository>();
+
+
+
+
+            // Services
+            builder.Services.AddScoped<DoctorService>();
+
+            // Auto Mapper Configurations
+            builder.Services.AddAutoMapper(typeof(DoctorMappingProfile));
+
+
 
 
             var app = builder.Build();
@@ -44,10 +75,10 @@ namespace Online_Medical
 
             app.UseRouting();
 
-            // 3. Enable Session Middleware (Must be before Authorization)
-            app.UseSession();
-
+            app.UseAuthentication();   
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
