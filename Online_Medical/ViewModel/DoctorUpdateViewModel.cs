@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Online_Medical.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Online_Medical.ViewModels
+namespace Online_Medical.ViewModel
 {
     
-    public class DoctorRegisterViewModel
+    public class DoctorUpdateViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(50)]
         [Display(Name = "First Name")]
@@ -24,11 +26,6 @@ namespace Online_Medical.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? DateOfBirth { get; set; }
 
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
         [Required]
         [Phone]
         [Display(Name = "Phone Number")]
@@ -38,14 +35,6 @@ namespace Online_Medical.ViewModels
         public Gender Gender { get; set; }
         [BindNever] // <-- Add this attribute
         public List<SelectListItem> GenderOptions { get; set; } = new List<SelectListItem>();
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Compare("Password")]
-        [Display(Name = "Confirm Password")]
-        public string ConfirmPassword { get; set; }
 
         [BindNever] // <-- Add this attribute
         public List<SelectListItem> SpecializationNames { get; set; } = new List<SelectListItem>();

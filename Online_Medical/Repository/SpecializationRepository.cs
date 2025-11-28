@@ -17,6 +17,11 @@ namespace Online_Medical.Repository
             _context.Specializations.Add(obj);
         }
 
+        public Task AddAsync(Specialization obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             var specializationToRemove = GetById(id);
@@ -25,6 +30,11 @@ namespace Online_Medical.Repository
                 _context.Specializations.Remove(specializationToRemove);
             }
 
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Specialization> GetAll()
@@ -42,6 +52,11 @@ namespace Online_Medical.Repository
             return _context.Specializations.FirstOrDefault(s => s.Id == id);
         }
 
+        public Task<Specialization> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save()
         {
             _context.SaveChanges();
@@ -54,6 +69,11 @@ namespace Online_Medical.Repository
         public void Update(Specialization obj)
         {
             _context.Specializations.Update(obj);
+        }
+
+        public Task UpdateAsync(Specialization obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
