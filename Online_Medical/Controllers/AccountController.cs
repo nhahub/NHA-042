@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Online_Medical.ALL_DATA;
+using Online_Medical.EServices;
 using Online_Medical.Models;
 using Online_Medical.ViewModel;
-using Online_Medical.EServices;
 
 namespace Online_Medical.Controllers
 {
@@ -11,12 +12,15 @@ namespace Online_Medical.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        
         private readonly IEmailSender emailSender;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
+        private readonly AppDbContext _context;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, AppDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
+            this._context = context;
         }
         [HttpGet]
 
@@ -41,6 +45,7 @@ namespace Online_Medical.Controllers
                 user.PhoneNumber = newUser.PhoneNumber;
                 user.DateOfBirth = newUser.DateOfBirth;
                 user.Gender = newUser.Gender;
+                user.JoinDate = DateTime.Now;
 
                 IdentityResult Results = await userManager.CreateAsync(user, newUser.Password);
 
@@ -48,6 +53,20 @@ namespace Online_Medical.Controllers
                 {
                    
                     await userManager.AddToRoleAsync(user, "Patient");
+
+                    Patient patientProfile = new Patient
+                    {
+                        // الحل: يجب تعيين خاصية الـ Key المشتركة 'Id'
+                        Id = user.Id,
+
+                        // تعيين الـ Navigation Property لمزيد من الوضوح
+                        ApplicationUser = user
+
+                        // ... لو عندك أي خصائص زيادة زي 'ProfileImage' ضيفيها هنا ...
+                    };
+
+                    _context.Patients.Add(patientProfile);
+                    await _context.SaveChangesAsync();
 
                     // 2. Generate Token & Link
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
