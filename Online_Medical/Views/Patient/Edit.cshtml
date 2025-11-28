@@ -1,0 +1,142 @@
+﻿@model Online_Medical.ViewModel.PatientProfileViewModel
+@using Online_Medical.Models
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">Edit Your Profile</h2>
+    <hr />
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ExistingImageUrl" />
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+
+                @{
+                    var imgSrc = string.IsNullOrEmpty(Model.ExistingImageUrl) || Model.ExistingImageUrl == "/images/default.png"
+                    ? "/images/default.png"
+                    : Model.ExistingImageUrl;
+                }
+
+                <img src="@imgSrc" alt="Profile"
+                     class="img-thumbnail rounded-circle mb-3"
+                     id="img-preview"
+                     style="width:150px; height:150px; object-fit:cover;" />
+
+                <div class="form-group">
+                    <label for="ProfileImage" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-camera"></i> Upload New Image
+                    </label>
+                    <input asp-for="ProfileImage" id="ProfileImage" type="file" class="d-none" />
+                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="row">
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="Gender"></label>
+                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="BirthDate"></label>
+                        <input asp-for="BirthDate" class="form-control" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- ===================================== -->
+        <!--       CHANGE PASSWORD SECTION          -->
+        <!-- ===================================== -->
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Change Password</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="OldPassword"></label>
+                        <input asp-for="OldPassword" class="form-control" type="password" />
+                        <span asp-validation-for="OldPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="NewPassword"></label>
+                        <input asp-for="NewPassword" class="form-control" type="password" />
+                        <span asp-validation-for="NewPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-3 text-end">
+            <a asp-action="Details" class="btn btn-secondary">Cancel</a>
+            <input type="submit" value="Save Changes" class="btn btn-success" />
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        document.getElementById('ProfileImage').addEventListener('change', function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('img-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

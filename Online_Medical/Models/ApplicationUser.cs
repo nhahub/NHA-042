@@ -15,6 +15,7 @@ namespace Online_Medical.Models
 
         public Gender Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public DateTime JoinDate { get; set; }
 
 
 

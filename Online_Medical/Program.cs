@@ -50,8 +50,11 @@ namespace Online_Medical
 
             // 5. Services
             builder.Services.AddScoped<DoctorService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
-
+            builder.Services.AddScoped<IPatientService, PatientService>();
+            builder.Services.AddScoped<IPatientRepository, PatientRepository>();
             // 6. AutoMapper
             builder.Services.AddAutoMapper(typeof(DoctorMappingProfile));
 

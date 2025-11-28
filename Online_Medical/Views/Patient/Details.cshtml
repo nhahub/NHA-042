@@ -1,0 +1,51 @@
+﻿@using Online_Medical.Models
+@model Patient
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <div class="row">
+
+            <div class="col-md-4 text-center">
+
+                @{
+                    var imgSrc = string.IsNullOrEmpty(Model.ProfileImage) || Model.ProfileImage == "/images/default.png"
+                    ? "/images/default.png"
+                    : Model.ProfileImage;
+                }
+                <img src="@imgSrc" alt="Profile"
+                                class="img-thumbnail rounded-circle mb-3" style="width:150px; height:150px; object-fit:cover;" />
+
+                <h4 class="text-primary">@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h4>
+            </div>
+
+            <div class="col-md-8">
+                <h2 class="card-title text-primary"><i class="fas fa-user-circle"></i> Personal Information</h2>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4">Username:</dt>
+                    <dd class="col-sm-8">@Model.ApplicationUser.UserName</dd>
+
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">@Model.ApplicationUser.Email</dd>
+
+                    <dt class="col-sm-4">Phone:</dt>
+                    <dd class="col-sm-8">@Model.ApplicationUser.PhoneNumber</dd>
+
+                    <dt class="col-sm-4">Gender:</dt>
+                    <dd class="col-sm-8">@Model.ApplicationUser.Gender</dd>
+
+                    <dt class="col-sm-4">Date of Birth:</dt>
+                    <dd class="col-sm-8">@Model.ApplicationUser.DateOfBirth.ToShortDateString()</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit Profile</a>
+        </div>
+    </div>
+</div>
