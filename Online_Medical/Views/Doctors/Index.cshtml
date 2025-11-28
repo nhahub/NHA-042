@@ -1,60 +1,68 @@
-﻿@model IEnumerable<Online_Medical.Models.Doctor>
+﻿@model List<DoctorIndexViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Doctors";
     Layout = "~/Views/Shared/_DoctorLayout.cshtml";
 }
 
-<h1>Index</h1>
+<section class="text-center mb-5">
+    <h2 class="mt-0 fw-bold">Doctors List</h2>
+    <hr class="divider" />
+</section>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExperienceYears)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfileImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpecializationId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExperienceYears)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecializationId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" asp-controller="Doctors" class="btn btn-primary btn-lg">
+        <i class="bi bi-plus-circle"></i> Add New Doctor
+    </a>
+</div>
+
+<div class="table-responsive shadow rounded">
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>SR</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Specialization</th>
+                <th style="width: 220px;">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>@item.SerialNumber</td>
+                    <td>@item.FullName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Gender</td>
+                    <td>@item.specializationName</td>
+                    <td>
+                        <a asp-controller="Doctors"
+                           asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-primary me-2">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+
+                        <a asp-controller="Doctors"
+                           asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-warning me-2">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+
+                        <a asp-controller="Doctors"
+                           asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

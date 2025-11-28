@@ -21,6 +21,11 @@ namespace Online_Medical.Repository
             _context.Doctors.Add(obj);
         }
 
+        public Task AddAsync(Doctor obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(string id)
         {
             
@@ -31,6 +36,11 @@ namespace Online_Medical.Repository
             }
         }
 
+        public Task DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Doctor> GetAll()
         {
             return _context.Doctors.ToList();
@@ -38,12 +48,22 @@ namespace Online_Medical.Repository
 
         public async Task<IEnumerable<Doctor>> GetAllAsync()
         {
-            return await _context.Doctors.ToListAsync();
+            return await _context.Doctors
+                .Include(d=>d.Specialization)
+                .Include(d=>d.ApplicationUser)
+                .ToListAsync();
         }
 
         public Doctor GetById(string id)
         {
             return _context.Doctors.FirstOrDefault(d=>d.Id==id);
+        }
+        public async Task<Doctor> GetByIdAsync(string id)
+        {
+            return await _context.Doctors
+                .Include(d => d.Specialization)
+                .Include(d => d.ApplicationUser)
+                .FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public void Save()
@@ -58,5 +78,11 @@ namespace Online_Medical.Repository
         {
             _context.Doctors.Update(obj);
         }
+        public async Task UpdateAsync(Doctor obj)
+        {
+            _context.Doctors.Update(obj);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

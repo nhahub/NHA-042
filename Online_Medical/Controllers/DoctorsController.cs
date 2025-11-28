@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Online_Medical.ALL_DATA;
 using Online_Medical.Models;
 using Online_Medical.Services;
-using Online_Medical.ViewModels;
+using Online_Medical.ViewModel;
 using System.Threading.Tasks;
 
 namespace Online_Medical.Controllers
@@ -20,71 +21,93 @@ namespace Online_Medical.Controllers
         }
 
         // GET: DoctorsController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
-            var doctorList = _context.Doctors.ToList(); 
+            var doctorList = await _service.GetAllDoctorsAsync();
 
-            return View("Index", doctorList);
+            return  View("Index", doctorList);
         }
 
 
         // GET: DoctorsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var vm=await _service.GetDoctorByIdAsync(id);
+            return View("Details",vm);
         }
 
         // GET: DoctorsController/Create
         [HttpGet]
         public async Task<ActionResult> Create()
         {   
-            DoctorRegisterViewModel _vm = await _service.GetCreateDoctorViewModelAsync();
-            _vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
+            //DoctorRegisterViewModel _vm = await _service.GetCreateDoctorViewModelAsync();
+            //_vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
 
-            return View("Create", _vm);
+            return View("Create");
         }
 
         // POST: DoctorsController/Create
-        [HttpPost]
-        public async Task<ActionResult> Create(DoctorRegisterViewModel vm)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _service.RegisterDoctor(vm); // ✅ Await the async method
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    // Optionally add the exception message to ModelState
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-
-            return View("Create", vm);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult> Create()
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        await _service.RegisterDoctor(vm); 
+        //    //        return RedirectToAction("Index");
+        //    //    }
+        //    //    catch (Exception ex)
+        //    //    {
+        //    //        // Optionally add the exception message to ModelState
+        //    //        ModelState.AddModelError("", ex.Message);
+        //    //    }
+        //    //}
+        //    //DoctorRegisterViewModel _vm = await _service.GetCreateDoctorViewModelAsync();
+        //    return View("Create");
+        //}
 
 
         // GET: DoctorsController/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            //GetDoctorByIdAsync have the same content as Edit (same viewmodel)
+            DoctorUpdateViewModel vm =await _service.GetDoctorByIdAsync(id);
+            vm.GenderOptions =  GenderList.GetEnumSelectList< Gender>();
+            vm.SpecializationNames = await _context.Specializations
+                .Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                }).ToListAsync();
+            return View("Edit", vm);
+
         }
+
 
         // POST: DoctorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public  async Task <ActionResult> Edit(DoctorUpdateViewModel vm)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _service.UpadateDoctorAsync(vm);
+                return RedirectToAction("Details",vm);
             }
             catch
             {
-                return View();
+                vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
+                vm.SpecializationNames = await _context.Specializations
+                    .Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToListAsync();
+                return View("Edit",vm);
             }
         }
 
