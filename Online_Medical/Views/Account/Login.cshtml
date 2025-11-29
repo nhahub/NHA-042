@@ -1,75 +1,151 @@
 ﻿@model Online_Medical.ViewModel.LoginUserViewModel
 
 @{
-    ViewData["Title"] =" log in";
+    Layout = null;
+    ViewData["Title"] = "Login";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3><i class="fas fa-sign-in-alt"></i>LOG IN</h3>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In - Online Medical</title>
 
-                <div class="card-body p-4">
-                    <form asp-action="Login" method="post">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger" role="alert" style="display:none;"></div>
-                        <div class="form-group mb-3">
-                            <label asp-for="UserName" class="form-label">Email or Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                <input asp-for="UserName" class="form-control" placeholder="Enter email or username" />
+    <style>
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: hsl(0, 0%, 96%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('/assets/img/background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 1200px;
+            background-color: transparent;
+            border-radius: 2rem;
+        }
+
+        .card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border-radius: 0.8rem;
+            border: none;
+            background-color: #ffffff;
+            max-width: 450px;
+            margin: auto;
+        }
+
+       
+        h4, .h4 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+       
+        .btn-block {
+            display: block;
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+
+      
+        .form-outline .form-control:focus ~ .form-label,
+        .form-outline .form-control:not(:placeholder-shown):not(.active) ~ .form-label {
+            transform: translateY(-1rem) scale(0.8);
+            font-size: 1rem;
+            color: #757575;
+            font-weight: 500;
+        }
+
+        .form-outline .form-control {
+            padding-top: 0.25rem;
+            padding-bottom: 0.75rem;
+            border-radius: 0.8rem;
+            border: 0.1px solid #c6d3e0;
+        }
+    </style>
+
+</head>
+<body>
+
+    <section class="p-0">
+        <div class="px-4 py-5 px-md-5 text-center text-lg-start d-flex justify-content-center align-items-center">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body py-5 px-md-5">
+                        <h4 class="mb-4">LOGIN</h4>
+
+                        <form asp-action="Login" asp-controller="Account" method="post">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger" role="alert" style="display:none;"></div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input asp-for="UserName" class="form-control" id="UserName" />
+                                <label class="form-label" for="UserName">Email or UserName</label>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="UserName" class="text-danger"></span>
-                        </div>
 
-                        <div class="form-group mb-3">
-                            <label asp-for="Password" class="form-label">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                <input asp-for="Password" class="form-control" type="password" placeholder="Enter password" />
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input asp-for="Password" type="password" class="form-control" id="Password" />
+                                <label class="form-label" for="Password">Password</label>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
 
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" asp-for="RememberMe" />
-                            <label class="form-check-label" asp-for="RememberMe">
-                                Remember Me
-                            </label>
-                        </div>
+                            <div class="row mb-4">
+                                <div class="col d-flex justify-content-start">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="RememberMe" id="RememberMeCheck" />
+                                        <label class="form-check-label" for="RememberMeCheck"> Remember Me </label>
+                                    </div>
+                                </div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
-                        </div>
+                                <div class="col text-end">
+                                    <a asp-action="ForgotPassword" asp-controller="Account" class="text-primary">Forgot password?</a>
+                                </div>
+                            </div>
 
-                    </form>
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+                                LOGIN
+                            </button>
+
+                            <div class="text-center">
+                                <p>Don't have an account? <a asp-action="Register" asp-controller="Account" class="text-primary fw-bold">Register New Patient</a></p>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-                <div class="text-center mt-3">
-                    <a asp-action="ForgotPassword" class="text-danger">Forgot Password?</a>
-                </div>
-                <div class="card-footer text-center text-muted">
-                    <p class="mb-1">Don't have an account? <a asp-action="Register" class="text-primary">Register New Patient</a></p>
-                </div>
+
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
+        
         $(document).ready(function () {
-       
             if ($(".validation-summary-errors ul li").length > 0) {
                 $(".validation-summary-errors").show();
             }
         });
     </script>
-}
+
+</body>
+</html>

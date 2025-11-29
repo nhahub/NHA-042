@@ -1,25 +1,76 @@
-﻿@{
+﻿@* File: /Views/Account/RegistrationSuccessful.cshtml *@
+@{
+    Layout = null; 
     ViewData["Title"] = "Registration Successful";
 }
 
-<div class="container mt-5 text-center">
-    <div class="card shadow p-5">
-        <div class="card-body">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
 
-            <h2 class="text-success display-5 fw-bold">
-                <i class="fas fa-check-circle"></i> Success!
-            </h2>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
-            <p class="lead mt-3 fw-bold">
-                @ViewBag.Message
-            </p>
+    <style>
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('/assets/img/background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-            <hr class="my-4" />
+        .card {
+            max-width: 550px; 
+            margin: auto;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
 
-            <a asp-action="Login" asp-controller="Account" class="btn btn-primary btn-lg px-5">
-                Log In
-            </a>
+        .display-5 {
+            color: #198754 !important; 
+        }
+    </style>
+</head>
+<body>
 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow p-5">
+                    <div class="card-body text-center">
+
+                        <h2 class="display-5 fw-bold mb-3">
+                            <i class="fas fa-check-circle me-2"></i> Success!
+                        </h2>
+
+                        <p class="lead mt-3 fw-bold text-dark">
+                            @ViewBag.Message
+                        </p>
+
+                        <hr class="my-4" />
+
+                        <a asp-action="Login" asp-controller="Account"
+                           class="btn btn-primary btn-lg px-5"
+                           data-mdb-button-init data-mdb-ripple-init>
+                            Log In
+                        </a>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
+
+</body>
+</html>
