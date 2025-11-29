@@ -37,6 +37,40 @@ namespace Online_Medical.Repository
         public Task<bool> CheckPasswordAsync(ApplicationUser user, string password) => _userManager.CheckPasswordAsync(user, password);
         public Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword) => _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         public Task UpdateSecurityStampAsync(ApplicationUser user) => _userManager.UpdateSecurityStampAsync(user);
+    
+    // في PatientRepository.cs، أضف هذه الدوال الأربعة:
+
+// 1. تنفيذ AddAsync
+public Task AddAsync(Patient obj)
+        {
+            // نستخدم Add العادية لأن الحفظ (SaveAsync) يتم لاحقاً
+            _context.Set<Patient>().Add(obj);
+            return Task.CompletedTask;
+        }
+
+        // 2. تنفيذ UpdateAsync
+        public Task UpdateAsync(Patient obj)
+        {
+            _context.Set<Patient>().Update(obj);
+            return Task.CompletedTask;
+        }
+
+        // 3. تنفيذ GetByIdAsync
+        public async Task<Patient> GetByIdAsync(string id)
+        {
+            // نستخدم FindAsync لجلب البيانات بشكل غير متزامن
+            return await _context.Set<Patient>().FindAsync(id);
+        }
+
+        // 4. تنفيذ DeleteAsync
+        public async Task DeleteAsync(string id)
+        {
+            // نستخدم GetByIdAsync لضمان أن العملية غير متزامنة بالكامل
+            var patient = await GetByIdAsync(id);
+            if (patient != null)
+            {
+                _context.Set<Patient>().Remove(patient);
+            }
+        }
     }
 }
-    
