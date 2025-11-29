@@ -41,32 +41,30 @@ namespace Online_Medical.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {   
-            //DoctorRegisterViewModel _vm = await _service.GetCreateDoctorViewModelAsync();
-            //_vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
+            DoctorAddViewModel vm = new DoctorAddViewModel();
 
-            return View("Create");
+            return View("Create",vm);
         }
 
-        // POST: DoctorsController/Create
-        //[HttpPost]
-        //public async Task<ActionResult> Create()
-        //{
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    //    try
-        //    //    {
-        //    //        await _service.RegisterDoctor(vm); 
-        //    //        return RedirectToAction("Index");
-        //    //    }
-        //    //    catch (Exception ex)
-        //    //    {
-        //    //        // Optionally add the exception message to ModelState
-        //    //        ModelState.AddModelError("", ex.Message);
-        //    //    }
-        //    //}
-        //    //DoctorRegisterViewModel _vm = await _service.GetCreateDoctorViewModelAsync();
-        //    return View("Create");
-        //}
+        //POST: DoctorsController/Create
+        [HttpPost]
+        [HttpPost]
+        public async Task<ActionResult> Create(DoctorAddViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _service.RegisterDoctor(vm);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View("Create", vm);
+        }
 
 
         // GET: DoctorsController/Edit/5

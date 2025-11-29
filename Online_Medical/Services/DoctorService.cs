@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
 using Online_Medical.Interface;
 using Online_Medical.Models;
 using Online_Medical.Repository;
 using Online_Medical.ViewModel;
+using System.Security.Policy;
 
 namespace Online_Medical.Services
 {
@@ -16,6 +19,7 @@ namespace Online_Medical.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository<Specialization, int> _specializationRepository;
 
+
         public DoctorService(IRepository<Doctor, string> doctorRepository,
             IMapper mapper, UserManager<ApplicationUser> userManager,
             IRepository<Specialization, int> specializationRepoistor)
@@ -24,11 +28,12 @@ namespace Online_Medical.Services
             _mapper = mapper;
             _userManager = userManager;
             _specializationRepository = specializationRepoistor;
+
         }
 
 
         #region old GetCreateDoctorViewModelAsync()
-                //public async Task<DoctorRegisterViewModel> GetCreateDoctorViewModelAsync()
+        //public async Task<DoctorRegisterViewModel> GetCreateDoctorViewModelAsync()
         //{
         //    var specializations = await _specializationRepository.GetAllAsync();
 
@@ -47,12 +52,12 @@ namespace Online_Medical.Services
 
         //    return vm;
         //}
-	    #endregion
+        #endregion
 
 
 
 
-       //public async Task RegisterDoctor(DoctorRegisterViewModel doctorVM)
+        //public async Task RegisterDoctor(DoctorRegisterViewModel doctorVM)
         //{
         //    // 1. Map ViewModel to Identity User and create the user
         //    ApplicationUser user = _mapper.Map<ApplicationUser>(doctorVM);
@@ -97,23 +102,20 @@ namespace Online_Medical.Services
         public async Task<List<DoctorIndexViewModel>> GetAllDoctorsAsync()
         {
             var doctors = await _doctorRepository.GetAllAsync();
-
             var doctorVMs = doctors
                 .Select((d, index) => new DoctorIndexViewModel
                 {
                     Id = d.Id,
-                    SerialNumber = index + 1, 
-                    FullName = d.ApplicationUser.FirstName + " " + d.ApplicationUser.LastName,
-                    Email = d.ApplicationUser.Email,
-                    PhoneNumber = d.ApplicationUser.PhoneNumber,
-                    Gender = d.ApplicationUser.Gender,
-                    specializationName = d.Specialization.Name
+                    SerialNumber = index + 1,
+                    FullName = $"{d.ApplicationUser?.FirstName ?? ""} {d.ApplicationUser?.LastName ?? ""}".Trim(),
+                    Email = d.ApplicationUser?.Email ?? "N/A",
+                    PhoneNumber = d.ApplicationUser?.PhoneNumber ?? "N/A",
+                    Gender = d.ApplicationUser?.Gender,
+                    specializationName = d.Specialization?.Name ?? "Not Assigned"
                 })
                 .ToList();
-
             return doctorVMs;
         }
-
 
         public async Task<DoctorUpdateViewModel>GetDoctorByIdAsync(string id)
         {
@@ -135,6 +137,40 @@ namespace Online_Medical.Services
             return vm;
         }
 
+
+        public async Task<IdentityResult> RegisterDoctor(DoctorAddViewModel vm)
+        {
+            ApplicationUser user = _mapper.Map<ApplicationUser>(vm);
+            user.UserName = vm.Email;
+
+            var result = await _userManager.CreateAsync(user, vm.Password);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                throw new Exception(errors);
+            }
+            
+            Doctor doctor = new Doctor
+            {
+                Id = user.Id,
+                ApplicationUser = user
+            };
+
+            try
+            {
+                await _doctorRepository.AddAsync(doctor);
+
+                await _doctorRepository.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                var innerError = ex.InnerException != null ? ex.InnerException.Message : "No inner exception.";
+
+                throw new Exception($"Failed to save Doctor entity. Details: {innerError}", ex);
+            }
+
+            return result;
+        }
         public async Task<bool> UpadateDoctorAsync(DoctorUpdateViewModel _Vm) {
             ApplicationUser user = await _userManager.FindByIdAsync(_Vm.Id);
 

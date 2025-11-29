@@ -6,16 +6,15 @@ namespace Online_Medical.Models
 
     public class ApplicationUser:IdentityUser
     {
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
 
-        public Gender Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime JoinDate { get; set; }
+        [MaxLength(50)]
+        public string? FirstName { get; set; }
+        [MaxLength(50)]
+        public string? LastName { get; set; }
+
+        public Gender? Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.UtcNow;
 
 
 

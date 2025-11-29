@@ -27,9 +27,10 @@ namespace Online_Medical.ViewModel
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Date of Birth")]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
-        public Gender Gender { get; set; }
+        [Required]
+        public Gender? Gender { get; set; }
 
         
         public string ExistingImageUrl { get; set; }
