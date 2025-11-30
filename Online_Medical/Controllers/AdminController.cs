@@ -1,54 +1,4 @@
-﻿//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using Online_Medical.ALL_DATA;
-//using Online_Medical.Models;
-//using Online_Medical.ViewModel;
-
-//namespace Online_Medical.Controllers
-//{
-//    // [Authorize(Roles = "Admin")] // Uncomment when Admin role is fully implemented
-//    public class AdminController : Controller
-//    {
-//        private readonly UserManager<ApplicationUser> _userManager;
-//        private readonly AppDbContext _context;
-
-//        public AdminController(UserManager<ApplicationUser> userManager, AppDbContext context)
-//        {
-//            _userManager = userManager;
-//            _context = context;
-//        }
-
-//        public async Task<IActionResult> Index()
-//        {
-//            // Fetch all users with the "Patient" role
-//            var patients = await _userManager.GetUsersInRoleAsync("Patient");
-
-//            var model = new List<AdminPatientViewModel>();
-
-//            foreach (var user in patients)
-//            {
-//                // Get patient details to access appointments
-//                var patientData = await _context.Patients
-//                    .Include(p => p.Appointments)
-//                    .FirstOrDefaultAsync(p => p.Id == user.Id);
-
-//                model.Add(new AdminPatientViewModel
-//                {
-//                    Username = user.UserName,
-//                    Email = user.Email,
-//                    PhoneNumber = user.PhoneNumber,
-//                    JoinDate = user.JoinDate,
-//                    TotalAppointments = patientData?.Appointments?.Count ?? 0
-//                });
-//            }
-
-//            return View(model);
-//        }
-//    }
-//}
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Medical.Interface;
 using Online_Medical.ViewModel;
@@ -67,18 +17,17 @@ namespace Online_Medical.Controllers
             _adminService = adminService;
         }
 
-        // ============================================
+       
         // 1. Index (جلب قائمة المرضى)
-        // ============================================
+       
         public async Task<IActionResult> Index()
         {
             var model = await _adminService.GetAdminPatientListAsync();
             return View(model);
         }
 
-        // ============================================
-        // 2. Details (توجيه لصفحة تفاصيل المريض)
-        // ============================================
+        // 2. Details 
+       
         [HttpGet]
         public IActionResult Details(string id)
         {
@@ -86,9 +35,9 @@ namespace Online_Medical.Controllers
             return RedirectToAction("Details", "Patient", new { id = id });
         }
 
-        // ============================================
-        // 3. Edit (توجيه لصفحة تعديل المريض)
-        // ============================================
+       
+        // 3. Edit
+       
         [HttpGet]
         public IActionResult Edit(string id)
         {
@@ -117,5 +66,128 @@ namespace Online_Medical.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // ============================================
+        // 5. CreateClinic (GET) - عرض نموذج إنشاء العيادة
+        // ============================================
+        [HttpGet]
+        public IActionResult CreateClinic()
+        {
+            return View(); // هذا يرسل النموذج الفارغ لملء البيانات
+        }
+
+        // ============================================
+        // 6. CreateClinic (POST) - معالجة نموذج إنشاء العيادة
+        // ============================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateClinic(ClinicCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // استدعاء الـService لتنفيذ المنطق المعقد
+                var result = await _adminService.CreateClinicAsync(model);
+
+                if (result.Succeeded)
+                {
+                    // النجاح: التوجيه لصفحة قائمة المشرف الرئيسية
+                    TempData["SuccessMessage"] = "تم إنشاء العيادة وربط الأطباء بنجاح.";
+                    return RedirectToAction("Index", "Admin");
+                }
+
+                // فشل: عرض رسائل الأخطاء من الـService (مثل عدم العثور على طبيب)
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // إذا فشل الـModelState أو فشل الـService، نعرض الـView مرة أخرى
+            return View(model);
+        }
+
+        // ============================================
+        // 7. ClinicIndex (GET)
+        // ============================================
+        [HttpGet]
+        public async Task<IActionResult> ClinicIndex()
+        {
+            var model = await _adminService.GetClinicListAsync();
+            return View(model);
+        }
+
+        // ============================================
+        // 8. ClinicDetails (GET)
+        // ============================================
+        [HttpGet]
+        public async Task<IActionResult> ClinicDetails(int id)
+        {
+            var model = await _adminService.GetClinicDetailsAsync(id);
+            if (model == null)
+            {
+                TempData["ErrorMessage"] = $"لم يتم العثور على العيادة رقم {id}.";
+                return RedirectToAction(nameof(ClinicIndex));
+            }
+            return View(model);
+        }
+
+        // ============================================
+        // 9. ClinicDelete (POST)
+        // ============================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClinicDelete(int id)
+        {
+            var result = await _adminService.DeleteClinicAsync(id);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = $"تم حذف العيادة بنجاح.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "حدث خطأ أثناء حذف العيادة.";
+            }
+            return RedirectToAction(nameof(ClinicIndex));
+        }
+
+        // ============================================
+        // 10. ClinicEdit (GET)
+        // ============================================
+        [HttpGet]
+        public async Task<IActionResult> ClinicEdit(int id)
+        {
+            var model = await _adminService.GetClinicForEditAsync(id);
+            if (model == null)
+            {
+                TempData["ErrorMessage"] = "العيادة غير موجودة.";
+                return RedirectToAction(nameof(ClinicIndex));
+            }
+            return View(model);
+        }
+
+        // ============================================
+        // 11. ClinicEdit (POST)
+        // ============================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClinicEdit(ClinicEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _adminService.UpdateClinicAsync(model);
+                if (result.Succeeded)
+                {
+                    TempData["SuccessMessage"] = "تم تحديث بيانات العيادة بنجاح.";
+                    return RedirectToAction(nameof(ClinicIndex));
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
+        }
+
     }
 }

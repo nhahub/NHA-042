@@ -1,13 +1,24 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Online_Medical.ViewModel;
+using Online_Medical.Models;
 
 namespace Online_Medical.Interface
 {
     public interface IAdminService
-    {// 1. جلب قائمة المرضى المعروضة في Index
+    {
         Task<List<AdminPatientViewModel>> GetAdminPatientListAsync();
 
-        // 2. حذف المريض
+     
+       
+     
         Task<IdentityResult> DeletePatientAsync(string userId);
+      
+        Task<IdentityResult> CreateClinicAsync(ClinicCreateViewModel model);
+        Task<ClinicListViewModel> GetClinicListAsync();
+        Task<ClinicDetailsViewModel?> GetClinicDetailsAsync(int clinicId);
+        Task<ClinicEditViewModel?> GetClinicForEditAsync(int id);
+        Task<IdentityResult> UpdateClinicAsync(ClinicEditViewModel model);
+        Task<IdentityResult> DeleteClinicAsync(int clinicId);
     }
+
 }
