@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_Medical.ALL_DATA;
 
@@ -11,9 +12,11 @@ using Online_Medical.ALL_DATA;
 namespace Online_Medical.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251129203313_MakeDateOfBirthNullable")]
+    partial class MakeDateOfBirthNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,8 +342,8 @@ namespace Online_Medical.Migrations
 
             modelBuilder.Entity("Online_Medical.Models.DoctorClinic", b =>
                 {
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClinicId")
                         .HasColumnType("int");
@@ -348,6 +351,9 @@ namespace Online_Medical.Migrations
                     b.Property<string>("Day")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DoctorId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
@@ -358,6 +364,8 @@ namespace Online_Medical.Migrations
                     b.HasKey("DoctorId", "ClinicId");
 
                     b.HasIndex("ClinicId");
+
+                    b.HasIndex("DoctorId1");
 
                     b.ToTable("DoctorClinics");
                 });
@@ -418,11 +426,17 @@ namespace Online_Medical.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("DoctorId")
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DoctorId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PatientId")
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PatientId1")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -434,9 +448,9 @@ namespace Online_Medical.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("DoctorId1");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientId1");
 
                     b.ToTable("Reviews");
                 });
@@ -567,9 +581,7 @@ namespace Online_Medical.Migrations
 
                     b.HasOne("Online_Medical.Models.Doctor", "Doctor")
                         .WithMany("DoctorClinics")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId1");
 
                     b.Navigation("Clinic");
 
@@ -602,13 +614,13 @@ namespace Online_Medical.Migrations
                 {
                     b.HasOne("Online_Medical.Models.Doctor", "Doctor")
                         .WithMany("Reviews")
-                        .HasForeignKey("DoctorId")
+                        .HasForeignKey("DoctorId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Online_Medical.Models.Patient", "Patient")
                         .WithMany("Reviews")
-                        .HasForeignKey("PatientId")
+                        .HasForeignKey("PatientId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

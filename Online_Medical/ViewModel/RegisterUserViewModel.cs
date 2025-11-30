@@ -5,7 +5,10 @@ using Online_Medical.Services;
 namespace Online_Medical.ViewModel
 {
     public class RegisterUserViewModel
-    { public string FirstName { get; set; }
+    {
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
         public string UserName { get; set; }
         [Required(ErrorMessage = "Email is required")]
@@ -20,10 +23,10 @@ namespace Online_Medical.ViewModel
         [Required(ErrorMessage = "Date of Birth is required")]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)] 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         [Required(ErrorMessage = "Gender is required")]
         [Display(Name = "Gender")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]

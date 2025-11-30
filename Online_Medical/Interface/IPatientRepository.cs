@@ -5,7 +5,7 @@ using Online_Medical.Interface; // نحتاج هذا لتعريف IRepository
 namespace Online_Medical.Interface
 {
     // هذا هو التعريف الصحيح: واجهة واحدة ترث وتضيف الدوال المطلوبة
-    public interface IPatientRepository : IRepository<Patient, string>
+    public interface IPatientRepository : IRepository<Patient,string>
     {
         // العمليات الخاصة التي تحتاج Identity أو Include:
         Task<Patient?> GetPatientWithUserByIdAsync(string patientId);

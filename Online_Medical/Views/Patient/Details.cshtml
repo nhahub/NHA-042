@@ -39,7 +39,7 @@
                     <dd class="col-sm-8">@Model.ApplicationUser.Gender</dd>
 
                     <dt class="col-sm-4">Date of Birth:</dt>
-                    <dd class="col-sm-8">@Model.ApplicationUser.DateOfBirth.ToShortDateString()</dd>
+                    <dd class="col-sm-8">@Model.ApplicationUser.DateOfBirth?.ToShortDateString()</dd>
                 </dl>
             </div>
         </div>

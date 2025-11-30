@@ -16,7 +16,7 @@ namespace Online_Medical.ViewModel
 
         public string PhoneNumber { get; set; }
 
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         public string specializationName { get; set; }
         public int SpecializationId { get; set; }

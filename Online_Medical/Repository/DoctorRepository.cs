@@ -21,9 +21,10 @@ namespace Online_Medical.Repository
             _context.Doctors.Add(obj);
         }
 
-        public Task AddAsync(Doctor obj)
+        public async Task AddAsync(Doctor obj)
         {
-            throw new NotImplementedException();
+             await _context.Doctors.AddAsync(obj);
+
         }
 
         public void Delete(string id)

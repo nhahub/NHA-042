@@ -32,7 +32,8 @@ namespace Online_Medical.ViewModel
         public string PhoneNumber { get; set; }
 
         [Required]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
+
         [BindNever] // <-- Add this attribute
         public List<SelectListItem> GenderOptions { get; set; } = new List<SelectListItem>();
 

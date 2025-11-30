@@ -10,14 +10,21 @@ namespace Online_Medical.Mapping
             public DoctorMappingProfile()
             {
 
-                // CreateMap<DoctorUpdateViewModel, ApplicationUser>()
-                //.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)) // Username = Email
-                //.ForMember(dest => dest.PasswordHash, opt => opt.Ignore()) // Identity handles password hashing
-                //.ForMember(dest => dest.Id, opt => opt.Ignore()); // Identity will generate Id
-                //    
+            // CreateMap<DoctorUpdateViewModel, ApplicationUser>()
+            //.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)) // Username = Email
+            //.ForMember(dest => dest.PasswordHash, opt => opt.Ignore()) // Identity handles password hashing
+            //.ForMember(dest => dest.Id, opt => opt.Ignore()); // Identity will generate Id
+            //    
 
-                //CreateMap<Source, Destination>();
-                CreateMap<DoctorUpdateViewModel, ApplicationUser>()
+                CreateMap<DoctorAddViewModel, ApplicationUser>()
+                .ForMember(dest => dest.UserName, opt => opt.Ignore()) // Don't map UserName
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
+
+            //CreateMap<Source, Destination>();
+            CreateMap<DoctorUpdateViewModel, ApplicationUser>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())
                     .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Identity handles password hashing
 

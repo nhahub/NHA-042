@@ -69,16 +69,16 @@ namespace Online_Medical.Controllers
                     await _context.SaveChangesAsync();
 
                     // 2. Generate Token & Link
-                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Account",
-                           new { userId = user.Id, token = token }, Request.Scheme);
+                    //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var confirmationLink = Url.Action("ConfirmEmail", "Account",
+                           //new { userId = user.Id, token = token }, Request.Scheme);
 
                     
-                    await emailSender.SendEmailAsync(user.Email, "Confirm Your Account",
-                        $"Welcome to Online Medical! <br> Please click the link below to confirm your account: <br> <a href='{confirmationLink}'>Confirm Account</a>");
+                    //await emailSender.SendEmailAsync(user.Email, "Confirm Your Account",
+                        //$"Welcome to Online Medical! <br> Please click the link below to confirm your account: <br> <a href='{confirmationLink}'>Confirm Account</a>");
 
 
-                    ViewBag.Message = "Registration successful! We have sent a confirmation link to your email. Please check your inbox.";
+                    //ViewBag.Message = "Registration successful! We have sent a confirmation link to your email. Please check your inbox.";
                     return View("RegistrationSuccess");
                 }
 
