@@ -11,6 +11,9 @@ namespace Online_Medical.ViewModel
         [Required]
         public string LastName { get; set; }
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+
         public string Email { get; set; }
         [Required(ErrorMessage = "Phone Number is required")]
         [Display(Name = "Phone Number")]

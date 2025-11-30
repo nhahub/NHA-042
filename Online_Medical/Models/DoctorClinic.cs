@@ -4,7 +4,7 @@ namespace Online_Medical.Models
 {
     public class DoctorClinic
     {
-        public int DoctorId { get; set; }
+        public string DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 
         [Required]

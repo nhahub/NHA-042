@@ -8,15 +8,26 @@ namespace Online_Medical.Interface
 {
     public interface IAdminRepository
     {
-        Task<IList<ApplicationUser>> GetUsersInRoleAsync(string roleName);
+       
 
-        // 2. جلب بيانات المريض مع المواعيد
+        
         Task<Patient?> GetPatientDataWithAppointmentsAsync(string userId);
 
-        // 3. حذف المستخدم بشكل كامل
+       
         Task<IdentityResult> DeleteUserAsync(ApplicationUser user);
 
-        // 4. جلب المستخدم عن طريق الـID
         Task<ApplicationUser?> FindUserByIdAsync(string userId);
+        Task DeletePatientProfileAsync(string userId);
+        Task<List<Patient>> GetAllPatientProfilesAsync();
+        //clinic
+        Task AddClinicAsync(Clinic clinic);
+        Task AddDoctorClinicAsync(DoctorClinic doctorClinic);
+        Task<string?> FindDoctorIdByIdentifierAsync(string identifier);
+        Task SaveChangesAsync();
+        Task<List<Clinic>> GetAllClinicsAsync();
+        Task<Clinic?> GetClinicByIdAsync(int clinicId);
+        Task UpdateClinicAsync(Clinic clinic);
+        Task DeleteClinicAsync(int clinicId);
+
     }
 }

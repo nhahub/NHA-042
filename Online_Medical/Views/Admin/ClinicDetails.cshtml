@@ -1,0 +1,78 @@
+﻿@model Online_Medical.ViewModel.ClinicDetailsViewModel
+
+@{
+    ViewData["Title"] = $"Clinic Details: {Model.Name}";
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-clinic-medical"></i> Clinic Details: @Model.Name</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-info">Basic Data and Address</h4>
+            <hr class="mt-1" />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Name)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+
+                <dt class="col-sm-4">Phone</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                <dt class="col-sm-4">Street</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Street)</dd>
+
+                <dt class="col-sm-4">Building Number</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.BuildingNumber)</dd>
+
+                <dt class="col-sm-4">Region</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Region)</dd>
+
+                <dt class="col-sm-4">City</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.City)</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <h4 class="text-success">Associated Doctors</h4>
+            <hr class="mt-1" />
+
+            <div class="alert alert-success d-flex justify-content-between align-items-center">
+                <strong>Total Number of Doctors:</strong>
+                <span class="badge bg-success fs-5">@Model.DoctorsCount</span>
+            </div>
+
+            @if (Model.Doctors.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var doctor in Model.Doctors)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>@doctor.FullName</strong> (@doctor.Username)
+                                <br />
+                                <small class="text-muted">@doctor.Email</small>
+                            </div>
+                            <a asp-action="Details" asp-controller="Doctor" asp-route-id="@doctor.DoctorId" class="btn btn-outline-info btn-sm">View Doctor Profile</a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-warning">No doctors currently associated with this clinic.</p>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="ClinicEdit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+        <a asp-action="ClinicIndex" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

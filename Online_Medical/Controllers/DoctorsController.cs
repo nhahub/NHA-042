@@ -89,14 +89,10 @@ namespace Online_Medical.Controllers
         // POST: DoctorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  async Task <ActionResult> Edit(DoctorUpdateViewModel vm)
+        [HttpPost]
+        public async Task<ActionResult> Edit(DoctorUpdateViewModel vm)
         {
-            try
-            {
-                await _service.UpadateDoctorAsync(vm);
-                return RedirectToAction("Details",vm);
-            }
-            catch
+            if (!ModelState.IsValid)
             {
                 vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
                 vm.SpecializationNames = await _context.Specializations
@@ -105,7 +101,28 @@ namespace Online_Medical.Controllers
                         Text = s.Name,
                         Value = s.Id.ToString()
                     }).ToListAsync();
-                return View("Edit",vm);
+
+                return View("Edit",vm); 
+            }
+
+            try
+            {
+                await _service.UpadateDoctorAsync(vm);
+
+                return RedirectToAction("Details", new { id = vm.Id });
+            }
+            catch (Exception ex)
+            {
+
+                vm.GenderOptions = GenderList.GetEnumSelectList<Gender>();
+                vm.SpecializationNames = await _context.Specializations
+                    .Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToListAsync();
+                ModelState.AddModelError("", "Failed to update doctor. Please try again.");
+                return View("Edit", vm);
             }
         }
 
