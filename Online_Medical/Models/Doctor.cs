@@ -20,7 +20,7 @@ namespace Online_Medical.Models
 
 
         [MaxLength(500)]
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
 
         public string? ProfileImage { get; set; }
 

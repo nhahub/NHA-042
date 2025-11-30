@@ -178,7 +178,7 @@
             margin-top: 5px;
             text-align: left;
             position: absolute; /* تجربة أولى: وضع مطلق */
-            bottom: -20px; /* لتحديد موقعها بدقة أسفل الحقل */
+            bottom: -30px; /* لتحديد موقعها بدقة أسفل الحقل */
             left: 0;
         }
 
@@ -232,7 +232,7 @@
         <div class="signup-box">
             <h2 class="signup-title">Sign up</h2>
             <form asp-action="Register" method="post" class="signup-form">
-
+                <div asp-validation-summary="All" class="text-danger alert alert-danger" role="alert" style="display:none;"></div>
                 <div class="row-group">
                     <div class="form-field-group">
                         <label asp-for="FirstName" class="control-label">First name</label>
@@ -280,7 +280,7 @@
                     <div class="form-field-group">
                         <label asp-for="Gender" class="control-label">Gender</label>
                         <select asp-for="Gender"
-                                asp-items="Html.GetEnumSelectList<Online_Medical.Models.Gender>()"
+                                asp-items="Html.GetEnumSelectList<Online_Medical.Services.Gender>()"
                                 required>
                             <option value="" disabled selected>Gender</option>
                         </select>

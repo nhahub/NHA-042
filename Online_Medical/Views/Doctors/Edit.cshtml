@@ -1,0 +1,115 @@
+﻿@using Online_Medical.ViewModel
+@model DoctorUpdateViewModel
+
+@{
+    ViewData["Title"] = "Edit Doctor Account";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-9">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0 text-center fw-semibold">Edit Doctor Account</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Edit" asp-controller="Doctors" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Personal Information -->
+                        <div class="mb-4">
+                            <h6 class="text-primary fw-bold mb-3 pb-2 border-bottom">
+                                <i class="bi bi-person-circle"></i> Personal Information
+                            </h6>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="FirstName" class="form-label fw-semibold small"></label>
+                                    <input asp-for="FirstName" class="form-control form-control-sm" />
+                                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="LastName" class="form-label fw-semibold small"></label>
+                                    <input asp-for="LastName" class="form-control form-control-sm" />
+                                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="DateOfBirth" class="form-label fw-semibold small"></label>
+                                    <input asp-for="DateOfBirth" type="date" class="form-control form-control-sm" />
+                                    <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="Gender" class="form-label fw-semibold small"></label>
+                                    <select asp-for="Gender" asp-items="Model.GenderOptions" class="form-select form-select-sm">
+                                        <option value="0">-- Select Gender --</option>
+                                    </select>
+                                    <span asp-validation-for="Gender" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="PhoneNumber" class="form-label fw-semibold small"></label>
+                                    <input asp-for="PhoneNumber" class="form-control form-control-sm" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Information -->
+                        <div class="mb-4">
+                            <h6 class="text-primary fw-bold mb-3 pb-2 border-bottom">
+                                <i class="bi bi-hospital"></i> Professional Information
+                            </h6>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="SpecializationId" class="form-label fw-semibold small"></label>
+                                    <select asp-for="SpecializationId" asp-items="Model.SpecializationNames" class="form-select form-select-sm">
+                                        <option value="">-- Select Specialization --</option>
+                                    </select>
+                                    <span asp-validation-for="SpecializationId" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="ExperienceYears" class="form-label fw-semibold small"></label>
+                                    <input asp-for="ExperienceYears" class="form-control form-control-sm" />
+                                    <span asp-validation-for="ExperienceYears" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Bio" class="form-label fw-semibold small"></label>
+                                    <textarea asp-for="Bio" class="form-control form-control-sm" rows="3"></textarea>
+                                    <span asp-validation-for="Bio" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="ProfileImage" class="form-label fw-semibold small"></label>
+                                    <input asp-for="ProfileImage" class="form-control form-control-sm" />
+                                    <span asp-validation-for="ProfileImage" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-check-lg"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        await Html.RenderPartialAsync("_ValidationScriptsPartial")
+}

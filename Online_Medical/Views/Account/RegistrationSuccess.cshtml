@@ -1,6 +1,6 @@
 ﻿@* File: /Views/Account/RegistrationSuccessful.cshtml *@
 @{
-    Layout = null; 
+    Layout = null;
     ViewData["Title"] = "Registration Successful";
 }
 
@@ -9,68 +9,178 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Online Medical</title>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
     <style>
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('/assets/img/background.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+
+        /* تهيئة عامة للتصميم الجديد (مطابقة لصفحتي Register و Login) */
+                :root {
+                        --primary-color: #2b98e1; /* اللون الأزرق المميز */
+                        --text-color: #333;
+                        --box-bg: rgba(255, 255, 255, 0.2); /* خلفية بيضاء شفافة للصندوق */
+                        --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+                        --border-radius: 20px;
+                        --success-color: #198754; /* لون النجاح (الأخضر) */
+
         }
 
-        .card {
-            max-width: 550px; 
-            margin: auto;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: Arial, sans-serif;
+
         }
 
-        .display-5 {
-            color: #198754 !important; 
+                body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        background-image: url('/assets/img/background2.png'); /* مطابقة للخلفية السابقة */
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+
         }
+
+                .main-wrapper {
+                        display: flex;
+                        width: 90%;
+                        max-width: 1200px;
+                        align-items: center;
+                        justify-content: space-between;
+
+        }
+
+
+
+
+
+
+        /* -------------------- قسم النص الترويجي -------------------- */
+                .promo-text {
+                        flex-basis: 45%;
+                        padding-right: 20px;
+
+        }
+
+                .main-heading {
+                        font-size: 4.5rem;
+                        font-weight: 800;
+                        line-height: 1.1;
+                        color: #333;
+                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
+
+                .highlight {
+                        color: var(--primary-color);
+                        font-weight: 800;
+
+        }
+
+
+        /* -------------------- صندوق النجاح (Glassmorphism) -------------------- */
+                .success-box {
+                        flex-basis: 50%;
+                        max-width: 500px;
+                        padding: 50px 40px; /* مساحة أكبر للرسالة */
+                        background: var(--box-bg);
+                        border-radius: var(--border-radius);
+                        backdrop-filter: blur(10px);
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                        border: var(--glass-border);
+                        text-align: center;
+
+        }
+
+                .success-icon {
+                        font-size: 3.5rem;
+                        color: var(--success-color);
+                        margin-bottom: 20px;
+                        text-shadow: 0 0 10px rgba(25, 135, 84, 0.3);
+
+        }
+
+                .success-title {
+                        font-size: 2.5rem;
+                        font-weight: 700;
+                        color: var(--text-color);
+                        margin-bottom: 20px;
+
+        }
+
+                .success-message {
+                        font-size: 1.15rem;
+                        color: var(--text-color);
+                        margin-bottom: 30px;
+
+        }
+
+                hr {
+                        border: 0;
+                        height: 1px;
+                        background-color: rgba(51, 51, 51, 0.2);
+                        margin: 25px 0;
+
+        }
+
+
+        /* زر تسجيل الدخول */
+                .login-btn {
+                        padding: 12px 40px;
+                        background-color: var(--primary-color);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background-color 0.3s, transform 0.1s;
+                        text-decoration: none;
+                        display: inline-block;
+
+        }
+
+                    .login-btn:hover {
+                            background-color: #217bb4;
+                            transform: translateY(-2px);
+
+        }
+
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card shadow p-5">
-                    <div class="card-body text-center">
+    <div class="main-wrapper">
+        <div class="promo-text">
+            <h1 class="main-heading">
+                Your Journey <br />
+                <span class="highlight">Starts Now</span>
+            </h1>
+        </div>
 
-                        <h2 class="display-5 fw-bold mb-3">
-                            <i class="fas fa-check-circle me-2"></i> Success!
-                        </h2>
+        <div class="success-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h2 class="success-title">
+                Registration Successful
+            </h2>
 
-                        <p class="lead mt-3 fw-bold text-dark">
-                            @ViewBag.Message
-                        </p>
+            <p class="success-message">
+                @ViewBag.Message
+            </p>
 
-                        <hr class="my-4" />
+            <hr />
 
-                        <a asp-action="Login" asp-controller="Account"
-                           class="btn btn-primary btn-lg px-5"
-                           data-mdb-button-init data-mdb-ripple-init>
-                            Log In
-                        </a>
+            <a asp-action="Login" asp-controller="Account" class="login-btn">
+                Proceed to Log In
+            </a>
 
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
 
 </body>
 </html>

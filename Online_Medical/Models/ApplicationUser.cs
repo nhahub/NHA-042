@@ -3,23 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Online_Medical.Models
 {
-    public enum Gender
-    {
-        Male,
-        Female,
-    }
 
     public class ApplicationUser:IdentityUser
     {
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
 
-        public Gender Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        [MaxLength(50)]
+        public string? FirstName { get; set; }
+        [MaxLength(50)]
+        public string? LastName { get; set; }
+
+        public Gender? Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.UtcNow;
 
 
 

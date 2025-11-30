@@ -10,139 +10,344 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log In - Online Medical</title>
+    <title>@ViewData["Title"] - Online Medical</title>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
     <style>
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: hsl(0, 0%, 96%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('/assets/img/background.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+
+        /* تهيئة عامة للتصميم الجديد (مطابقة لصفحة Register) */
+                :root {
+                        --primary-color: #2b98e1; /* اللون الأزرق المميز */
+                        --text-color: #333;
+                        --box-bg: rgba(255, 255, 255, 0.2); /* خلفية بيضاء شفافة للصندوق */
+                        --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+                        --border-radius: 20px;
+
         }
 
-        .container {
-            max-width: 1200px;
-            background-color: transparent;
-            border-radius: 2rem;
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: Arial, sans-serif;
+
         }
 
-        .card {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            border-radius: 0.8rem;
-            border: none;
-            background-color: #ffffff;
-            max-width: 450px;
-            margin: auto;
+                body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        overflow: auto;
+
+            /* تم استخدام نفس مسار الصورة الافتراضي لصفحة التسجيل */
+                        background-image: url('/assets/img/background2.png');
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+
         }
 
-       
-        h4, .h4 {
-            font-size: 1.75rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 1.5rem;
+                .main-wrapper {
+                        display: flex;
+                        width: 90%;
+                        max-width: 1200px;
+                        margin: 50px auto;
+                        align-items: center;
+                        justify-content: space-between;
+
         }
 
-       
-        .btn-block {
-            display: block;
-            width: 100%;
-            border-radius: 0.5rem;
+
+        /* -------------------- قسم النص الترويجي -------------------- */
+                .promo-text {
+                        flex-basis: 45%;
+                        padding-right: 20px; /* عكس الاتجاه ليكون مناسبًا لـ LTR */
+
         }
 
-      
-        .form-outline .form-control:focus ~ .form-label,
-        .form-outline .form-control:not(:placeholder-shown):not(.active) ~ .form-label {
-            transform: translateY(-1rem) scale(0.8);
-            font-size: 1rem;
-            color: #757575;
-            font-weight: 500;
+                .main-heading {
+                        font-size: 4.5rem;
+                        font-weight: 800;
+                        line-height: 1.1;
+                        color: #333;
+                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
         }
 
-        .form-outline .form-control {
-            padding-top: 0.25rem;
-            padding-bottom: 0.75rem;
-            border-radius: 0.8rem;
-            border: 0.1px solid #c6d3e0;
+                .highlight {
+                        color: var(--primary-color);
+                        font-weight: 800;
+
         }
+
+
+        /* -------------------- صندوق تسجيل الدخول (Glassmorphism) -------------------- */
+                .login-box {
+                        flex-basis: 50%;
+                        max-width: 500px;
+                        padding: 40px;
+                        background: var(--box-bg);
+                        border-radius: var(--border-radius);
+                        backdrop-filter: blur(10px);
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                        border: var(--glass-border);
+
+        }
+
+                .login-title {
+                        font-size: 2.2rem;
+                        font-weight: 600;
+                        margin-bottom: 30px;
+                        color: var(--text-color);
+                        text-align: center;
+
+        }
+
+                .login-form {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 25px; /* مسافة بين حقول الإدخال */
+
+        }
+
+
+        /* تنسيق الحقل الموحد */
+                .form-field-group {
+                        position: relative;
+                        margin-bottom: 20px;
+
+        }
+
+
+        /* تنسيق المدخلات */
+                input[type="text"],
+                input[type="password"] {
+                        width: 100%;
+                        padding: 15px 15px 15px 45px; /* مساحة لليسار للأيقونة */
+                        border: 1px solid #ccc;
+                        border-radius: 10px;
+                        font-size: 1rem;
+                        color: var(--text-color);
+                        background-color: rgba(255, 255, 255, 0.9);
+                        transition: border-color 0.3s, box-shadow 0.3s;
+                        line-height: normal;
+
+        }
+
+                    input:focus {
+                            border-color: var(--primary-color);
+                            outline: none;
+                            box-shadow: 0 0 8px rgba(43, 152, 225, 0.5);
+
+        }
+
+
+        /* الأيقونات داخل الحقول */
+                .form-field-group .icon {
+                        position: absolute;
+                        top: 50%;
+                        left: 15px;
+                        transform: translateY(-50%);
+                        color: #999;
+                        pointer-events: none;
+
+        }
+
+
+        /* رسائل التحقق من الصحة (Validation Messages) */
+                .text-danger {
+                        font-size: 0.9rem;
+                        color: #dc3545;
+                        display: block;
+                        margin-top: 5px;
+                        text-align: left;
+                        position: absolute;
+                        bottom: -20px; /* لتقليل المسافة عن الحقل قليلاً */
+                        left: 0;
+
+        }
+
+
+
+
+
+
+        /* ملخص التحقق من الصحة */
+                .alert-danger {
+                        padding: 10px;
+                        border-radius: 8px;
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        border: 1px solid #f5c6cb;
+                        margin-bottom: 20px;
+                        font-size: 1rem;
+                        display: none; /* يتم التحكم به بالجافاسكريبت */
+
+        }
+
+
+        /* زر تسجيل الدخول */
+                .login-btn {
+                        padding: 12px 30px;
+                        margin-top: 15px;
+                        background-color: var(--primary-color);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background-color 0.3s, transform 0.1s;
+                        width: 100%;
+
+        }
+
+                    .login-btn:hover {
+                            background-color: #217bb4;
+                            transform: translateY(-2px);
+
+        }
+
+
+        /* تنسيق خيارات التذكر ونسيان كلمة المرور */
+                .options-row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+
+        }
+
+                .form-check {
+                        display: flex;
+                        align-items: center;
+
+        }
+
+                .form-check-input {
+                        width: 18px;
+                        height: 18px;
+                        margin-right: 5px;
+                        accent-color: var(--primary-color);
+
+        }
+
+
+
+
+
+                .form-check-label {
+                        margin-bottom: 0;
+                        color: var(--text-color);
+
+        }
+
+
+
+
+
+                .forgot-link {
+                        color: var(--primary-color);
+                        text-decoration: none;
+                        font-weight: 500;
+                        font-size: 0.95rem;
+
+        }
+
+
+        /* تنسيق رابط التسجيل */
+                .register-text {
+                        text-align: center;
+                        margin-top: 20px;
+                        font-size: 1rem;
+
+        }
+
+
+
+
+
+                    .register-text a {
+                            color: var(--primary-color);
+                            text-decoration: none;
+                            font-weight: bold;
+
+            }
+
+
+        /* إخفاء الـ Labels حيث أننا نستخدم الـ Placeholder/Input Focus Effect */
+                .control-label {
+                        display: none;
+
+        }
+
+
     </style>
-
 </head>
 <body>
 
-    <section class="p-0">
-        <div class="px-4 py-5 px-md-5 text-center text-lg-start d-flex justify-content-center align-items-center">
-            <div class="container">
-                <div class="card">
-                    <div class="card-body py-5 px-md-5">
-                        <h4 class="mb-4">LOGIN</h4>
+    <div class="main-wrapper">
+        <div class="promo-text">
+            <h1 class="main-heading">
+                Welcome Back <br />
+                <span class="highlight">to Online Medical</span>
+            </h1>
+        </div>
 
-                        <form asp-action="Login" asp-controller="Account" method="post">
+        <div class="login-box">
+            <h2 class="login-title">LOGIN</h2>
+            <form asp-action="Login" asp-controller="Account" method="post" class="login-form">
 
-                            <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger" role="alert" style="display:none;"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger alert alert-danger validation-summary-errors" role="alert"></div>
 
-                            <div data-mdb-input-init class="form-outline mb-4">
-                                <input asp-for="UserName" class="form-control" id="UserName" />
-                                <label class="form-label" for="UserName">Email or UserName</label>
-                                <span asp-validation-for="UserName" class="text-danger"></span>
-                            </div>
+                <div class="form-field-group">
+                    <label asp-for="UserName" class="control-label">Email or Username</label>
+                    <i class="fas fa-user icon"></i>
+                    <input asp-for="UserName" type="text" placeholder="Email or Username" required />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
 
-                            <div data-mdb-input-init class="form-outline mb-4">
-                                <input asp-for="Password" type="password" class="form-control" id="Password" />
-                                <label class="form-label" for="Password">Password</label>
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
+                <div class="form-field-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <i class="fas fa-lock icon"></i>
+                    <input asp-for="Password" type="password" placeholder="Password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
 
-                            <div class="row mb-4">
-                                <div class="col d-flex justify-content-start">
-                                    <div class="form-check">
-                                        <input class="form-check-input" asp-for="RememberMe" id="RememberMeCheck" />
-                                        <label class="form-check-label" for="RememberMeCheck"> Remember Me </label>
-                                    </div>
-                                </div>
-
-                                <div class="col text-end">
-                                    <a asp-action="ForgotPassword" asp-controller="Account" class="text-primary">Forgot password?</a>
-                                </div>
-                            </div>
-
-                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
-                                LOGIN
-                            </button>
-
-                            <div class="text-center">
-                                <p>Don't have an account? <a asp-action="Register" asp-controller="Account" class="text-primary fw-bold">Register New Patient</a></p>
-                            </div>
-
-                        </form>
+                <div class="options-row">
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="RememberMe" id="RememberMeCheck" />
+                        <label class="form-check-label" for="RememberMeCheck"> Remember Me </label>
+                    </div>
+                    <div>
+                        <a asp-action="ForgotPassword" asp-controller="Account" class="forgot-link">Forgot password?</a>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </section>
+                <button type="submit" class="login-btn">
+                    LOGIN
+                </button>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
+                <div class="register-text">
+                    <p>Don't have an account? <a asp-action="Register" asp-controller="Account">Register New Patient</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
-        
-        $(document).ready(function () {
-            if ($(".validation-summary-errors ul li").length > 0) {
-                $(".validation-summary-errors").show();
+        /* تم تحديث كود إظهار ملخص الأخطاء ليتناسب مع الكلاس الجديد */
+        document.addEventListener('DOMContentLoaded', function() {
+            const validationSummary = document.querySelector('.validation-summary-errors');
+            // التأكد من أن ul داخل الـ validation summary تحتوي على عناصر (أو أن هناك رسالة خطأ واحدة على الأقل)
+            if (validationSummary && (validationSummary.querySelector('ul') && validationSummary.querySelector('ul').children.length > 0)) {
+                validationSummary.style.display = 'block';
             }
         });
     </script>

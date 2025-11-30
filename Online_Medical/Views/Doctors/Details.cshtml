@@ -1,0 +1,64 @@
+﻿@model DoctorUpdateViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="mb-0">Doctor Details</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <!-- Image column -->
+                <div class="col-md-3 text-center mb-3 mb-md-0">
+                    @if (!string.IsNullOrEmpty(Model?.ProfileImage))
+                    {
+                        <img src="@Model.ProfileImage" alt="Profile image" class="img-fluid img-thumbnail" style="max-width: 180px;" />
+                    }
+                    else
+                    {
+                        <div class="border rounded p-3 d-inline-block" style="width:180px; height:180px; display:flex; align-items:center; justify-content:center;">
+                            <small class="text-muted">No image</small>
+                        </div>
+                    }
+                </div>
+
+                <!-- Details column -->
+                <div class="col-md-9">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.FirstName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.FirstName)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.LastName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.LastName)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.DateOfBirth)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.DateOfBirth)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Gender)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.Gender)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.PhoneNumber)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.PhoneNumber)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.ExperienceYears)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(m => m.ExperienceYears)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Bio)</dt>
+                        <dd class="col-sm-8" style="white-space:pre-wrap;">@Html.DisplayFor(m => m.Bio)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary me-2">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
