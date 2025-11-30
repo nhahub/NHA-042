@@ -81,7 +81,7 @@ namespace Online_Medical.Repository
         }
         public async Task UpdateAsync(Doctor obj)
         {
-            _context.Doctors.Update(obj);
+             _context.Doctors.Update(obj);
             await _context.SaveChangesAsync();
         }
 
