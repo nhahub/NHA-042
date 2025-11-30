@@ -15,11 +15,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
     <style>
 
-        /* تهيئة عامة للتصميم الجديد (مطابقة لصفحة Register) */
                 :root {
-                        --primary-color: #2b98e1; /* اللون الأزرق المميز */
+                        --primary-color: #2b98e1; 
                         --text-color: #333;
-                        --box-bg: rgba(255, 255, 255, 0.2); /* خلفية بيضاء شفافة للصندوق */
+                        --box-bg: rgba(255, 255, 255, 0.2);
                         --glass-border: 1px solid rgba(255, 255, 255, 0.3);
                         --border-radius: 20px;
 
@@ -40,7 +39,6 @@
                         min-height: 100vh;
                         overflow: auto;
 
-            /* تم استخدام نفس مسار الصورة الافتراضي لصفحة التسجيل */
                         background-image: url('/assets/img/background2.png');
                         background-size: cover;
                         background-position: center;
@@ -59,10 +57,9 @@
         }
 
 
-        /* -------------------- قسم النص الترويجي -------------------- */
                 .promo-text {
                         flex-basis: 45%;
-                        padding-right: 20px; /* عكس الاتجاه ليكون مناسبًا لـ LTR */
+                        padding-right: 20px; 
 
         }
 
@@ -81,8 +78,6 @@
 
         }
 
-
-        /* -------------------- صندوق تسجيل الدخول (Glassmorphism) -------------------- */
                 .login-box {
                         flex-basis: 50%;
                         max-width: 500px;
@@ -107,24 +102,20 @@
                 .login-form {
                         display: flex;
                         flex-direction: column;
-                        gap: 25px; /* مسافة بين حقول الإدخال */
+                        gap: 25px; 
 
         }
 
-
-        /* تنسيق الحقل الموحد */
                 .form-field-group {
                         position: relative;
                         margin-bottom: 20px;
 
         }
 
-
-        /* تنسيق المدخلات */
                 input[type="text"],
                 input[type="password"] {
                         width: 100%;
-                        padding: 15px 15px 15px 45px; /* مساحة لليسار للأيقونة */
+                        padding: 15px 15px 15px 45px; 
                         border: 1px solid #ccc;
                         border-radius: 10px;
                         font-size: 1rem;
@@ -143,7 +134,6 @@
         }
 
 
-        /* الأيقونات داخل الحقول */
                 .form-field-group .icon {
                         position: absolute;
                         top: 50%;
@@ -154,8 +144,6 @@
 
         }
 
-
-        /* رسائل التحقق من الصحة (Validation Messages) */
                 .text-danger {
                         font-size: 0.9rem;
                         color: #dc3545;
@@ -163,17 +151,11 @@
                         margin-top: 5px;
                         text-align: left;
                         position: absolute;
-                        bottom: -20px; /* لتقليل المسافة عن الحقل قليلاً */
+                        bottom: -20px; 
                         left: 0;
 
         }
 
-
-
-
-
-
-        /* ملخص التحقق من الصحة */
                 .alert-danger {
                         padding: 10px;
                         border-radius: 8px;
@@ -182,12 +164,10 @@
                         border: 1px solid #f5c6cb;
                         margin-bottom: 20px;
                         font-size: 1rem;
-                        display: none; /* يتم التحكم به بالجافاسكريبت */
+                        display: none; 
 
         }
 
-
-        /* زر تسجيل الدخول */
                 .login-btn {
                         padding: 12px 30px;
                         margin-top: 15px;
@@ -209,8 +189,6 @@
 
         }
 
-
-        /* تنسيق خيارات التذكر ونسيان كلمة المرور */
                 .options-row {
                         display: flex;
                         justify-content: space-between;
@@ -255,18 +233,12 @@
 
         }
 
-
-        /* تنسيق رابط التسجيل */
                 .register-text {
                         text-align: center;
                         margin-top: 20px;
                         font-size: 1rem;
 
         }
-
-
-
-
 
                     .register-text a {
                             color: var(--primary-color);
@@ -275,8 +247,6 @@
 
             }
 
-
-        /* إخفاء الـ Labels حيث أننا نستخدم الـ Placeholder/Input Focus Effect */
                 .control-label {
                         display: none;
 
@@ -342,10 +312,8 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
-        /* تم تحديث كود إظهار ملخص الأخطاء ليتناسب مع الكلاس الجديد */
         document.addEventListener('DOMContentLoaded', function() {
             const validationSummary = document.querySelector('.validation-summary-errors');
-            // التأكد من أن ul داخل الـ validation summary تحتوي على عناصر (أو أن هناك رسالة خطأ واحدة على الأقل)
             if (validationSummary && (validationSummary.querySelector('ul') && validationSummary.querySelector('ul').children.length > 0)) {
                 validationSummary.style.display = 'block';
             }
