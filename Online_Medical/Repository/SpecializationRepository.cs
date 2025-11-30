@@ -3,7 +3,7 @@ using Online_Medical.ALL_DATA;
 
 namespace Online_Medical.Repository
 {
-    public class SpecializationRepository:IRepository<Specialization, int>
+    public class SpecializationRepository : IRepository<Specialization, int>
     {
         private readonly AppDbContext _context;
         public SpecializationRepository(AppDbContext context)
@@ -17,11 +17,13 @@ namespace Online_Medical.Repository
             _context.Specializations.Add(obj);
         }
 
-        public Task AddAsync(Specialization obj)
+        public async Task AddAsync(Specialization obj)
         {
-            throw new NotImplementedException();
+            await _context.Specializations.AddAsync(obj);
         }
 
+
+        //Not implemented async methods below
         public void Delete(int id)
         {
             var specializationToRemove = GetById(id);
@@ -36,6 +38,7 @@ namespace Online_Medical.Repository
         {
             throw new NotImplementedException();
         }
+        //-----------------------------------
 
         public IEnumerable<Specialization> GetAll()
         {
@@ -43,7 +46,10 @@ namespace Online_Medical.Repository
         }
         public async Task<IEnumerable<Specialization>> GetAllAsync()
         {
-            return await _context.Specializations.ToListAsync();
+            return await _context.Specializations
+                .Include(d=>d.Doctors)
+                    .ThenInclude(d=>d.ApplicationUser)
+                .ToListAsync();
         }
 
 
@@ -52,9 +58,9 @@ namespace Online_Medical.Repository
             return _context.Specializations.FirstOrDefault(s => s.Id == id);
         }
 
-        public Task<Specialization> GetByIdAsync(int id)
+        public async Task<Specialization> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Specializations.FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public void Save()
@@ -69,11 +75,13 @@ namespace Online_Medical.Repository
         public void Update(Specialization obj)
         {
             _context.Specializations.Update(obj);
+            _context.SaveChanges();
         }
 
-        public Task UpdateAsync(Specialization obj)
+        public async Task UpdateAsync(Specialization obj)
         {
-            throw new NotImplementedException();
+            _context.Specializations.Update(obj);
+            await _context.SaveChangesAsync();
         }
     }
 }

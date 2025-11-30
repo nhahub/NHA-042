@@ -32,72 +32,6 @@ namespace Online_Medical.Services
         }
 
 
-        #region old GetCreateDoctorViewModelAsync()
-        //public async Task<DoctorRegisterViewModel> GetCreateDoctorViewModelAsync()
-        //{
-        //    var specializations = await _specializationRepository.GetAllAsync();
-
-        //    var vm = new DoctorRegisterViewModel
-        //    {
-        //        SpecializationNames = specializations
-        //            .Select(s => new SelectListItem
-        //            {
-        //                Text = s.Name,
-        //                Value = s.Id.ToString()
-        //            })
-        //            .ToList(),
-
-        //        GenderOptions = GenderList.GetEnumSelectList<Gender>()
-        //    };
-
-        //    return vm;
-        //}
-        #endregion
-
-
-
-
-        //public async Task RegisterDoctor(DoctorRegisterViewModel doctorVM)
-        //{
-        //    // 1. Map ViewModel to Identity User and create the user
-        //    ApplicationUser user = _mapper.Map<ApplicationUser>(doctorVM);
-        //    var result = await _userManager.CreateAsync(user, doctorVM.Password);
-
-        //    // Check if Identity User creation failed
-        //    if (!result.Succeeded)
-        //    {
-        //        // No need to delete the user here, as creation itself failed.
-        //        // We throw an exception with the Identity errors.
-        //        var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-        //        throw new Exception($"Failed to create Identity user: {errors}");
-        //    }
-
-        //    // 2. Map ViewModel to Doctor entity and link it to the user
-        //    Doctor doctor = _mapper.Map<Doctor>(doctorVM);
-        //    doctor.Id = user.Id;         // set primary key manually
-        //    doctor.ApplicationUser = user;
-        //    // 3. Attempt to save the Doctor record to the database
-        //    try
-        //    {
-        //        _doctorRepository.Add(doctor);
-        //        await _doctorRepository.SaveAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // CRITICAL ROLLBACK: If saving the Doctor fails, delete the previously created Identity User
-        //        await _userManager.DeleteAsync(user);
-
-        //        // Log the detailed exception (e.g., database constraint violation)
-        //        // You should use a real logging service here (e.g., ILogger)
-        //        System.Console.WriteLine($"Database Save Error for Doctor ID {user.Id}: {ex.Message}");
-
-        //        // Throw a new, clean exception to the calling layer
-        //        throw new Exception("Failed to save doctor details to the database (User creation rolled back).", ex);
-        //    }
-        //}
-
-
-
 
         public async Task<List<DoctorIndexViewModel>> GetAllDoctorsAsync()
         {
@@ -194,7 +128,7 @@ namespace Online_Medical.Services
             _mapper.Map(_Vm, doctor);
             try
             {
-                _doctorRepository.UpdateAsync(doctor);
+                await _doctorRepository.UpdateAsync(doctor);
                 return true;
             }
             catch (Exception ex)
