@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Online_Medical.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class SpecializationController : Controller
     {
         private readonly SpecializationService _specializationService;

@@ -139,7 +139,7 @@ namespace Online_Medical.Controllers
                             else if (roles.Contains("Doctor"))
                             {
                                 //نفس الكلام هنا
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Index", "Doctors");
                             }
                             else
                             {

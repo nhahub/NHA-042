@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Medical.ALL_DATA;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Online_Medical.Controllers
 {
+    [Authorize]
     public class DoctorsController : Controller
     {
         private readonly DoctorService _service;
@@ -21,6 +23,7 @@ namespace Online_Medical.Controllers
         }
 
         // GET: DoctorsController
+        [Authorize(Roles ="Doctor")]
         public async Task<ActionResult> Index()
         {
 
@@ -30,6 +33,7 @@ namespace Online_Medical.Controllers
         }
 
 
+
         // GET: DoctorsController/Details/5
         public async Task<ActionResult> Details(string id)
         {
@@ -37,8 +41,11 @@ namespace Online_Medical.Controllers
             return View("Details",vm);
         }
 
+
+
         // GET: DoctorsController/Create
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {   
             DoctorAddViewModel vm = new DoctorAddViewModel();
@@ -46,30 +53,38 @@ namespace Online_Medical.Controllers
             return View("Create",vm);
         }
 
+
+
         //POST: DoctorsController/Create
         [HttpPost]
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create(DoctorAddViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                try
+   
+                   var result = await _service.RegisterDoctor(vm);
+                if (result.Succeeded)
                 {
-                    await _service.RegisterDoctor(vm);
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                else
                 {
-                    ModelState.AddModelError("", ex.Message);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
+
             }
             return View("Create", vm);
         }
 
 
-        // GET: DoctorsController/Edit/5
 
+        // GET: DoctorsController/Edit/5
         [HttpGet]
+        [Authorize(Roles = "Doctor")]
         public async Task<ActionResult> Edit(string id)
         {
             //GetDoctorByIdAsync have the same content as Edit (same viewmodel)
@@ -86,10 +101,11 @@ namespace Online_Medical.Controllers
         }
 
 
+
         // POST: DoctorsController/Edit/5
-        [HttpPost]
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = "Doctor")]
         public async Task<ActionResult> Edit(DoctorUpdateViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -126,11 +142,16 @@ namespace Online_Medical.Controllers
             }
         }
 
+
+
+
         // GET: DoctorsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
+
+
 
         // POST: DoctorsController/Delete/5
         [HttpPost]

@@ -83,7 +83,7 @@ namespace Online_Medical.Services
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 throw new Exception(errors);
             }
-            
+            await _userManager.AddToRoleAsync(user, "Doctor");
             Doctor doctor = new Doctor
             {
                 Id = user.Id,
